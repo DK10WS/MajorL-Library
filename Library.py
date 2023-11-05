@@ -4,8 +4,8 @@ from tkinter import messagebox
 
 conn = mysql.connector.connect(
     host="localhost",
-    user="root",
-    password="Greymatter",
+    user="ENTER YOU STUFF",
+    password="ENTER YOUR PASS",
     database="LibraryDB"
 )
 cursor = conn.cursor()
