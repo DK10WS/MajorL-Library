@@ -2,7 +2,6 @@ import mysql.connector
 import tkinter as tk
 from tkinter import messagebox
 
-# Establish a MySQL database connection
 conn = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -11,11 +10,9 @@ conn = mysql.connector.connect(
 )
 cursor = conn.cursor()
 
-# Create the main application window
 root = tk.Tk()
 root.title("Library Management System")
 
-# Function to check if a book is available
 def check_book_availability():
     book_id = book_id_entry.get()
 
@@ -28,7 +25,6 @@ def check_book_availability():
     else:
         messagebox.showinfo("Book Availability", "The book is not available.")
 
-# Function to add a new user
 def add_new_user():
     userID = user_id_entry.get()
     user_name = user_name_entry.get()
@@ -39,7 +35,6 @@ def add_new_user():
     conn.commit()
     messagebox.showinfo("Success", "User added successfully.")
 
-# Function to issue a book
 def issue_book():
     user_id = user_id_entry.get()
     book_id = book_id_entry.get()
@@ -64,7 +59,6 @@ def issue_book():
         cursor.execute("UPDATE Books SET Copies = Copies - 1 WHERE BookID = %s", (book_id,))
         conn.commit()
 
-# Function to check fines
 def check_fines():
     user_id = user_id_entry.get()
     query = "SELECT * FROM Fines WHERE UserID = %s"
@@ -77,7 +71,6 @@ def check_fines():
     else:
         messagebox.showinfo("Fines", "No fines found for the user.")
 
-# Function to add a book
 def add_book():
     title = title_entry.get()
     author = author_entry.get()
@@ -123,15 +116,13 @@ isbn_entry = tk.Entry(root)
 copies_label = tk.Label(root, text="Copies:")
 copies_entry = tk.Entry(root)
 
-# Create buttons to perform actions
 check_availability_button = tk.Button(root, text="Check Book Availability", command=check_book_availability)
 add_user_button = tk.Button(root, text="Add New User", command=add_new_user)
 issue_book_button = tk.Button(root, text="Issue Book", command=issue_book)
 check_fines_button = tk.Button(root, text="Check Fines", command=check_fines)
 add_book_button = tk.Button(root, text="Add Book", command=add_book)
 
-# Grid layout for widgets
-user_name_label.place(x=100,y=100)
+user_name_label.place(row=0, column=0)
 user_name_entry.grid(row=0, column=1)
 address_label.grid(row=1, column=0)
 address_entry.grid(row=1, column=1)
@@ -162,8 +153,6 @@ issue_book_button.grid(row=13, column=0, columnspan=2)
 check_fines_button.grid(row=14, column=0, columnspan=2)
 add_book_button.grid(row=15, column=0, columnspan=2)
 
-# Start the Tkinter main loop
 root.mainloop()
 
-# Close the database connection when the application is closed
 conn.close()
