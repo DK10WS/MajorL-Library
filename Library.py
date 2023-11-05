@@ -4,8 +4,8 @@ from tkinter import messagebox
 
 conn = mysql.connector.connect(
     host="localhost",
-    user="ENTER YOU STUFF",
-    password="ENTER YOUR PASS",
+    user="ENTER OWN DETAILS",
+    password="ENETR OWN DETAILS",
     database="LibraryDB"
 )
 cursor = conn.cursor()
@@ -26,12 +26,13 @@ def check_book_availability():
         messagebox.showinfo("Book Availability", "The book is not available.")
 
 def add_new_user():
-    userID = user_id_entry.get()
     user_name = user_name_entry.get()
     address = address_entry.get()
     contact_info = contact_info_entry.get()
     library_card_number = library_card_entry.get()
-    cursor.execute("INSERT INTO Users (UserId,UserName, Address, ContactInfo, LibraryCardNumber) VALUES (%s,'%s', '%s', '%s', '%s')"%(userID,user_name, address, contact_info, library_card_number))
+
+    query = "INSERT INTO Users (UserName, Address, ContactInfo, LibraryCardNumber) VALUES ('%s', '%s', '%s','%s')"
+    cursor.execute(query, (user_name, address, contact_info, library_card_number))
     conn.commit()
     messagebox.showinfo("Success", "User added successfully.")
 
@@ -122,7 +123,7 @@ issue_book_button = tk.Button(root, text="Issue Book", command=issue_book)
 check_fines_button = tk.Button(root, text="Check Fines", command=check_fines)
 add_book_button = tk.Button(root, text="Add Book", command=add_book)
 
-user_name_label.place(row=0, column=0)
+user_name_label.grid(row=0, column=0)
 user_name_entry.grid(row=0, column=1)
 address_label.grid(row=1, column=0)
 address_entry.grid(row=1, column=1)
@@ -156,3 +157,4 @@ add_book_button.grid(row=15, column=0, columnspan=2)
 root.mainloop()
 
 conn.close()
+
